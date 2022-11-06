@@ -132,16 +132,21 @@ const endSessionQuery = async (sessionId, timestamp) => {
 }
 
 const searchSessionsByDateQuery = async (date, text) => {
-    console.log('TEXT: ', text);
+    // console.log('TEXT: ', text);
     let day, month, year, string, createdDtFormattedString;
     if (date) {
         day = new Date(date).getDate();
         month = new Date(date).getMonth() + 1;
         year = new Date(date).getFullYear();
         string = `${month}/${day}/${year}`;
+        if (day.toString().length === 1) {
+            day = `0${day}`
+        }
+        if (month.toString().length === 1) {
+            month = `0${month}`
+        }
         createdDtFormattedString = `${year}-${month}-${day}`;
     }
-    console.log('SEARCH STRING: ', string);
     const query = {
         text: `
         SELECT
@@ -154,6 +159,8 @@ const searchSessionsByDateQuery = async (date, text) => {
             title LIKE '%${string}%'
         OR
             regexp_replace(title, '[^[:alnum:]]', '', 'g') ILIKE '%${text}%'
+        OR
+            to_char(created_dt AT TIME ZONE 'PST', 'YYYY-MM-DD') LIKE '%${createdDtFormattedString}%'
         OR
             translate(title, '-/@', '') ILIKE '%${text}%'
         ORDER BY created_dt DESC
