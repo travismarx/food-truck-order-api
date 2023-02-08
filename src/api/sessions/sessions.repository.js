@@ -11,10 +11,6 @@ const getNewSessionOptionsQuery = async () => {
     };
 
     return (await pgClient.query(query)).rows;
-
-    const result = await pgClient.query(query).catch(error => {
-        console.log('ERROR GETTING SESSIONS: ', error);
-    });
 }
 
 const getSessionsByStatusQuery = async (status) => {
@@ -132,7 +128,6 @@ const endSessionQuery = async (sessionId, timestamp) => {
 }
 
 const searchSessionsByDateQuery = async (date, text) => {
-    // console.log('TEXT: ', text);
     let day, month, year, string, createdDtFormattedString;
     if (date) {
         day = new Date(date).getDate();

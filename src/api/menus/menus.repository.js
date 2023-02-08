@@ -19,17 +19,6 @@ const getAllMenuItemsQuery = async () => {
         LEFT JOIN menu_types mt on nm.menu_type_id = mt.menu_type_id 
         ORDER BY mi.menu_item_id
         `
-        // text: `
-        //     SELECT 
-        //         mi.menu_type_id as "menuTypeId",
-        //         mi.menu_item_id as "menuItemId",
-        //         mi.title,
-        //         mi.price,
-        //         mi.short_title as "shortTitle",
-        //         mi.color_code as "colorCode"
-        //     FROM menu_items mi
-        //     GROUP BY menu_item_id
-        // `
     };
 
     return (await pgClient.query(query)).rows;

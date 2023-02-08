@@ -60,7 +60,6 @@ const getSessionOrdersByStatus = async (req, res) => {
                     return acc + +(Math.round(current.updatedTimestamp - current.createdTimestamp) / 60)
                 }, 0) / nonDrinkOrders.length);
             }
-            // console.log('AVG TIME: ', avgTime);
             sessionOrders = orders.map(order => {
                 return {
                     ...order,

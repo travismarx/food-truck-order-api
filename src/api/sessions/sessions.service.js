@@ -10,10 +10,6 @@ const getAvgEarningsPerHour = (sessionInfo) => {
     return +((sessionInfo.totalEarnings / sessionHours).toFixed(2))
 }
 
-// const closeOpenSessionorders = async (sessionid) => {
-//     await closeAllOpenSessionOrders()
-// }
-
 const closeForgottenSessions = async () => {
     const nowTimestamp = Math.round(Date.now() / 1000);
     const twoHoursInSeconds = 7200;

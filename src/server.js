@@ -10,20 +10,17 @@ const messageFunctions = require("./socket/messageFunctions");
 const { closeForgottenSessions } = require('./api/sessions/sessions.service');
 
 io.on('connection', (socket) => {
-    // console.log('a user connected');
     socket.onAny((event, ...args) => {
         if (messageFunctions[event]) {
             messageFunctions[event](socket, args, io);
         }
     });
     socket.on('disconnect', () => {
-        // console.log('user disconnected');
     });
 });
 
 const intervalTasks = () => {
     setInterval(() => {
-        // console.log('INTERVAL TASK RUN');
         closeForgottenSessions();
     }, 600000);
 }

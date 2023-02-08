@@ -64,8 +64,7 @@ const startNewSession = async (req, res) => {
             await insertNewMenu(menuItems);
         }
 
-        const newSessionId = (await createNewSessionQuery(sessionTypeId, sessionTitle, menuTypeId))[0]
-            .sessionId;
+        const newSessionId = (await createNewSessionQuery(sessionTypeId, sessionTitle, menuTypeId))[0].sessionId;
 
         res.status(200).send({ sessionId: newSessionId });
     } catch (e) {
@@ -98,7 +97,7 @@ const getSessionData = async (req, res) => {
         const sessionMenu = await getSessionMenuQuery(sessionInfo.menuTypeId);
         const notesOptions = await getSessionQuickNotesQuery();
         const discountOptions = await getSessionDiscountOptionsQuery();
-        // const sessionMenu
+
         res.send({ sessionInfo: { ...sessionInfo, notesOptions, discountOptions }, sessionMenu });
     } catch (error) {
         console.log("ERROR GETTING SESSION DATA: ", error);
@@ -159,11 +158,9 @@ const endSession = async (req, res) => {
 const searchSessions = async (req, res) => {
     try {
         let { date, text } = req.query;
-        console.log('DATE: ', date);
-        // const isoString = new Date(date).toISOString().substring(0, 10);
-        // console.log('ISO STRING: ', isoString);
         text = text.replace(/[\W_]+/g, "");
         const results = await searchSessionsByDateQuery(date, text);
+
         res.send(results);
     } catch (error) {
         console.log('ERROR SEARCHING SESSIONS: ', error);
